@@ -8,38 +8,34 @@ import { CreateUserDto } from './users.dto';
 export class UsersService {
     constructor(private db:PrismaService){}
 
-    async findMany():Promise<User>[]>{
-        return this. db.user.findMany();
-    }
-    async findUnique (id:number):Promise<User>{
-        const user=await this.db.user.findUnique({
-            where:{ id },
-        });
-        if (!user){
-            throw new NotFoundException();
-        }
-        return user;
-    }
-    async create(data:Prisma.UserCreateInput):Promise<User>{
-        const existing=await this.db.user.findUnique({
-            where:{username:DataTransfer,username},
-        });
-        if (existing){
-            throw new ConflictException('username already exists in this system')
-        }
-        const hashedPassword= await bcypt.hash(data,password,8);
+async createUser(data:CreateUserDto):Promise<User>{
+    const existing=await this.db.user.findUnique({
+        where:{cpf: data.cpf},
+    });
 
-        const user=await this.db.user.create({
-            data:{
-                ..data,
-                senha:hashedPassword,
-            },
-        });
-        return user;  
+    if (existing){
+        throw new ConflictException('Este CPF já é cadastrado em nosso sistema');
     }
-    async deleteOneUser(where:Prisma.tweetWhereUniqueInput):Promise<User>{
-        return this.db.user({where});
-    }
-        
-    }
+    const hashedPassword= await bcypt.hash(data.password, 8);
 
+    const user=await this this.db.user.create({
+        data:{
+            ..data,
+            password:hashedPassword,
+        },
+    });
+    return user;
+} 
+async findUniqueUser(id:number):Promise<User>{
+    const user=await this.db.user.findUnique({
+
+    })
+
+     if (!user){
+         throw new NotFoundException('User nao foi encontrado');
+    }
+return await this.db.user.update({
+});
+async deleteUser(id:number):Promise<User>{
+    const user=await this this.db.user.findUnique({
+    });
