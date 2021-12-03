@@ -1,8 +1,8 @@
 import { Injectable,NotFoundException,ConflictException } from '@nestjs/common';
 import{User, Prisma} from '.prisma/client'
-import{PrismaService} from '../prisma.service';
+import{PrismaService} from 'src/prisma/prisma.service';
 import * as bcypt from 'bcrypt';
-import { create } from 'domain';
+import { CreateUserDto } from './users.dto';
 
 @Injectable()
 export class UsersService {

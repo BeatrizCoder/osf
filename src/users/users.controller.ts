@@ -12,12 +12,12 @@ export class usersController {
   findUnique(@Param('id') id: number): Promise<User> {
     return this.Service.findUnique(id);
   }
-  @Post('/create-account')
-  create(@Body() data: CreateUserDto): Promise<User> {
-    return this.service.create(data);
+  @Post('/create')
+   async createUser(@Body() CreateUser: CreateUserDto): Promise<User> {
+    return this.service.create(this.createUser);
   }
   @Delete('/delete/:id')
-  async delete(@Param(id) id: number) {
-    return this.service.deleteOneUser({ id: Number(id) });
+  adeleteUser(@Param('id') id: number):Promise<User> {
+    return this.service.deleteUser(id);
   }
 }
